@@ -51,27 +51,27 @@ These all use some measure of distance between sites to cluster them. For bioreg
 
 * **Sorensen distance**
 
-    $\beta_\textrm{sor} = 1 - \frac{2 \left|X \cap Y\right|}{\left|X\right| + \left|Y\right|}$
+    <img src="https://latex.codecogs.com/svg.latex?\beta_\textrm{sor}&space;=&space;1&space;-&space;\frac{2&space;\left|X&space;\cap&space;Y\right|}{\left|X\right|&space;&plus;&space;\left|Y\right|}" title="\beta_\textrm{sor} = 1 - \frac{2 \left|X \cap Y\right|}{\left|X\right| + \left|Y\right|}" />
 
-    Twice the number of the taxa in common between site $X$ and site $Y$, divided by the sum of the total number of taxa at site $X$ and the total number of taxa at site $Y$.
+    Twice the number of the taxa in common between site *X* and site *Y*, divided by the sum of the total number of taxa at site *X* and the total number of taxa at site *Y*.
 
 * **Simpson distance**
 
-    $\beta_\textrm{sim} = 1 - \frac{\left|X \cap Y\right|}{\min{(\left|X\right|,\left|Y\right|)}}$
+    <img src="https://latex.codecogs.com/svg.latex?\beta_\textrm{sim}&space;=&space;1&space;-&space;\frac{\left|X&space;\cap&space;Y\right|}{\min{(\left|X\right|,\left|Y\right|)}}" title="\beta_\textrm{sim} = 1 - \frac{\left|X \cap Y\right|}{\min{(\left|X\right|,\left|Y\right|)}}" />
 
-    The number of taxa in common between site $X$ and site $Y$, divided by the total number of taxa at the site with the least taxa. Usually chosen as it removes the influence of nested sites, so is a better measure of turnover than the Sorensen distance.
+    The number of taxa in common between site *X* and site *Y*, divided by the total number of taxa at the site with the least taxa. Usually chosen as it removes the influence of nested sites, so is a better measure of turnover than the Sorensen distance.
 
 The distances between sites can then be put into a clustering algorithm such as:
 
 * K-means - minimises the within cluster distances by:
 
-    1. Pick random data points as the starting centroids for $K$ clusters.
+    1. Pick random data points as the starting centroids for *K* clusters.
     2. Calculate the distance of all points to each centroid, and assign points to closest one.
     3. Move the centroids to the mean position within their cluster.
     4. Repeat steps 2 and 3 until there's no significant reduction in within cluster distance.
 
     Not usually used (not sure I found an example of it) because it needs distances to be Euclidean, 
-    which the $\beta$-diversity metrics aren't. Also probably need to ordinate sites first so the centroids can be assigned. Also need to choose the best number of clusters (either arbitrarily or with some quantitative metric).
+    which the beta-diversity metrics aren't. Also probably need to ordinate sites first so the centroids can be assigned. Also need to choose the best number of clusters (either arbitrarily or with some quantitative metric).
 
 * Hierarchical clustering - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:
 
@@ -101,7 +101,7 @@ Advantages of distance-based regionalisation:
 
 Disadvantages:
 
-  * $\beta$-diversity naturally increases with geographical distance from a point, so hard to decouple geographical distance and differences in species assemblages.
+  * beta-diversity naturally increases with geographical distance from a point, so hard to decouple geographical distance and differences in species assemblages.
   * Can fluctuate significantly at small scales and so overestimate differences, due to competitive exclusion, spatial clustering, and environmental gradients.
   * Heavily influenced by sampling of taxa.
 
