@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>What</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body class="vscode-light">
+        <p>My notes on the what, how, and why of bioregionalisation. I'm almost certainly missing something.</p>
+<p>I've put it on Github mainly to make it easier to share it with people, but also in case people want to contribute. Feel free to raise an issue or make a pull request or anything if you think there's something wrong or missing. I've almost certainly missed something.</p>
+<p>This is mainly drawn from the <a href="https://www.nature.com/articles/ncomms7848">Vilhena and Antonelli Nature Comms paper</a>, this <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.12558">Ebach and Parenti J. Biogeog. paper</a>, and this <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.12214">Rueda et al. J. Biogeog. paper</a>.</p>
+<ul>
+<li><a href="#what">What</a></li>
+<li><a href="#how">How</a>
+<ul>
+<li><a href="#distance-based-clustering">Distance based clustering</a></li>
+<li><a href="#network-based-clustering">Network based clustering</a></li>
+</ul>
+</li>
+<li><a href="#why-bother">Why bother?</a>
+<ul>
+<li><a href="#some-uses">Some uses</a></li>
+<li><a href="#some-problemsquestions">Some problems/questions</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="what">What</h1>
+<p>Bioregionalisation is the process of dividing the world up in to different biogeographical regions to study groups of species together.</p>
+<p>One of the first widely accepted divisions was a continental-based system by <a href="http://darwin-online.org.uk/converted/Ancillary/1876_GeographicalDistribution_S718.1/1876_GeographicalDistribution_S718.1.html">Wallace of zoogeographical regions</a>. This was based on a mix of quantitative reasoning and (semi-)subjective judgments.</p>
+<p>After that there were a number of refinements/different systems proposed using similar reasoning/methodology. Then it started going out of favour, until over the last decade(ish) there has been renewed interest.</p>
+<p>Most of the new papers on bioregionalisation use clustering based methods on species occurrence/range data to delimit bioregions without the (semi-)subjective judgments.</p>
+<p>Have a number of different uses, but all essentially use the bioregions as a unit for making analysis easier.</p>
+<h1 id="how">How</h1>
+<p>Wallace came up with this by setting out criteria that defined suitable bioregions:</p>
+<ul>
+<li>Regions should be of a reasonable number.</li>
+<li>They should be roughly equal in size.</li>
+<li>The boundaries should reflect major geographical divisions (easily defined and remembered).</li>
+<li>Regions should be taxonomically distinct.</li>
+<li>Shouldn't just be based on distinctiveness and endemism, but also richness and diversity.</li>
+</ul>
+<p>Then he defined hierarchical regions based on numbers of genera and families of mammals. So quantitatively based regions, but with (semi-)subjective delimitation.</p>
+<p>MAKE A LIST OF OLD BIOREGIONS STUFF. ECOREGIONS?</p>
+<p>Most new bioregionalisations follow the general process of:</p>
+<ol>
+<li>Get species occurrence or range data for taxonomic group of interest.</li>
+<li>Split that data up into species presences at sites (grid the data).</li>
+<li>Determine the relationship between sites (distance or bipartite graph).</li>
+<li>Use the relationships between sites to cluster them into bioregions.</li>
+</ol>
+<h2 id="distance-based-clustering">Distance based clustering</h2>
+<p>These all use some measure of distance between sites to cluster them. For bioregions, these are usually some sort of beta-diversity measure like:</p>
+<ul>
+<li>
+<p><strong>Sorensen distance</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mtext>sor</mtext></msub><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mn>2</mn><mrow><mo fence="true">∣</mo><mi>X</mi><mo>∩</mo><mi>Y</mi><mo fence="true">∣</mo></mrow></mrow><mrow><mrow><mo fence="true">∣</mo><mi>X</mi><mo fence="true">∣</mo></mrow><mo>+</mo><mrow><mo fence="true">∣</mo><mi>Y</mi><mo fence="true">∣</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">\beta_\textrm{sor} = 1 - \frac{2 \left|X \cap Y\right|}{\left|X\right| + \left|Y\right|}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord textrm mtight">sor</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span><span class="mbin mtight">+</span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.22222em;">Y</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mbin mtight">∩</span><span class="mord mathdefault mtight" style="margin-right:0.22222em;">Y</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>Twice the number of the taxa in common between site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> and site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>, divided by the sum of the total number of taxa at site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> and the total number of taxa at site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>.</p>
+</li>
+<li>
+<p><strong>Simpson distance</strong></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mtext>sim</mtext></msub><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo fence="true">∣</mo><mi>X</mi><mo>∩</mo><mi>Y</mi><mo fence="true">∣</mo></mrow><mrow><mi>min</mi><mo>⁡</mo><mrow><mo stretchy="false">(</mo><mrow><mo fence="true">∣</mo><mi>X</mi><mo fence="true">∣</mo></mrow><mo separator="true">,</mo><mrow><mo fence="true">∣</mo><mi>Y</mi><mo fence="true">∣</mo></mrow><mo stretchy="false">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">\beta_\textrm{sim} = 1 - \frac{\left|X \cap Y\right|}{\min{(\left|X\right|,\left|Y\right|)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31750199999999995em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord textrm mtight">sim</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">min</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mtight"><span class="mopen mtight">(</span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span><span class="mpunct mtight">,</span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.22222em;">Y</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span><span class="mclose mtight">)</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">X</span><span class="mbin mtight">∩</span><span class="mord mathdefault mtight" style="margin-right:0.22222em;">Y</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">∣</span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>The number of taxa in common between site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> and site <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>, divided by the total number of taxa at the site with the least taxa. Usually chosen as it removes the influence of nested sites, so is a better measure of turnover than the Sorensen distance.</p>
+</li>
+</ul>
+<p>The distances between sites can then be put into a clustering algorithm such as:</p>
+<ul>
+<li>
+<p>K-means - minimises the within cluster distances by:</p>
+<ol>
+<li>Pick random data points as the starting centroids for <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span></span></span></span> clusters.</li>
+<li>Calculate the distance of all points to each centroid, and assign points to closest one.</li>
+<li>Move the centroids to the mean position within their cluster.</li>
+<li>Repeat steps 2 and 3 until there's no significant reduction in within cluster distance.</li>
+</ol>
+<p>Not usually used (not sure I found an example of it) because it needs distances to be Euclidean,
+which the <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span></span></span></span>-diversity metrics aren't. Also probably need to ordinate sites first so the centroids can be assigned. Also need to choose the best number of clusters (either arbitrarily or with some quantitative metric).</p>
+</li>
+<li>
+<p>Hierarchical clustering - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:</p>
+<ol>
+<li>Starts by linking the two sites with the smallest distance. The branch length to the node linking them is half the distance between them.</li>
+<li>Updates the distance matrix by calculating the average distance of the sites in the first cluster to all other sites.</li>
+<li>Links the closest sites/clusters together. Could be adding a site to the first cluster or adding two sites together to make a new cluster.</li>
+<li>Update the distance matrix again, if a new site has been added to the cluster use proportional averaging to get the distance between the cluster and other sites.</li>
+<li>Repeat steps 3 and 4 until all sites are linked by the tree.</li>
+</ol>
+<p>If this is confusing the <a href="https://en.wikipedia.org/wiki/UPGMA#Working_example">Wikipedia site has a worked explanation</a>.</p>
+<p>This is much more commonly used. It has the advantage of working with whatever distance metric you use. Also has a hierarchical structure, which is something that bioregions are apparently meant to have. But you still need to decide how many clusters you want.</p>
+<ul>
+<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2699.2010.02375.x">Kreft and Jetz 2010</a> uses UPGMA, fair amount of regionalisation done since sites this method.</li>
+</ul>
+</li>
+<li>
+<p>Affinity propogation - sends messages between points to determine attractiveness between points, and the responsibility of each point to act as an examplar for a cluster. Could put in an explanation for the algorithm but its not particularly interesting. <a href="https://towardsdatascience.com/unsupervised-machine-learning-affinity-propagation-algorithm-explained-d1fef85f22c8">This is a good step through it though</a>.</p>
+<p>Not used as much as hierarchical clustering, but has the advantage of determining the optimal number of clusters for you.</p>
+</li>
+</ul>
+<p>There are various other clustering algorithms that could be used, but aren't really. UPGMA tends to be used the most, and has the advantage of being hierarchical. <a href="https://scikit-learn.org/stable/modules/clustering.html">This is a good comparison of different distance based clustering algorithms and when to use them</a></p>
+<p>Advantages of distance-based regionalisation:</p>
+<ul>
+<li>Based on well known and widely used metrics</li>
+<li>Can be extended fairly easily to take phylogenetics into account</li>
+<li>Wide variety of easy to implement and use clustering algorithms, with well understood upsides and downsides</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span></span></span></span>-diversity naturally increases with geographical distance from a point, so hard to decouple geographical distance and differences in species assemblages.</li>
+<li>Can fluctuate significantly at small scales and so overestimate differences, due to competitive exclusion, spatial clustering, and environmental gradients.</li>
+<li>Heavily influenced by sampling of taxa.</li>
+</ul>
+<h2 id="network-based-clustering">Network based clustering</h2>
+<p>Network-based clustering first puts the species and sites into a bipartite graph. The species and sites form two sets of nodes with no direct edges between nodes of the same site - no site-to-site edges and no species-to-species edges. So sites nodes are linked through the species that they share.</p>
+<p>This has some nice properties, for instance if you take the square of the network's adjacency matrix you get the species co-occurrence matrix and a matrix with number number of shared species between sites.</p>
+<p>But for clustering the main method that has been used is the Infomaps method that uses <a href="https://www.mapequation.org/assets/publications/EurPhysJ2010Rosvall.pdf">the map equation</a>.</p>
+<p>The map equation is a measure of how optimally a network is encoded. By grouping the nodes in a network into modules (clusters), you can decrease the detail needed to encode the nodes within each module. However, as you increase the number of modules you need a more complex code to describe moving between the modules. So it is a balance between the within-module and between-module complexity.</p>
+<p>The Infomap algorithm is a fast way of sampling how much time you would spend in each area of a network if you were taking a random walk through it. Areas where you'd spend a lot of time are areas where the sites have lots of shared species (lots of links). These are grouped in modules (clusters), as a way of minimising the map equation.</p>
+<p>Advantages:</p>
+<ul>
+<li>Not coupled to geographical distance so much?</li>
+<li>Gives more weight to species that only occur at one or a few sites</li>
+<li>Aligns closely with opinion-based bioregions</li>
+<li><a href="https://bioregions.mapequation.org/">Nice web app</a></li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>No obvious way to incorporate phylogenetics</li>
+<li>I think this is still influenced by sampling of taxa? Although maybe not as heavily as distance based methods?</li>
+</ul>
+<p>Used in:</p>
+<ul>
+<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.13585">Colli-Silva et al. 2019</a> justifying the delimitation of campo rupestre in Eastern Brazil into two sections.</li>
+<li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.13190">Droissart et al. 2018</a> regionalisation of tropical Africa using RAINBIO data.</li>
+<li><a href="https://academic.oup.com/sysbio/article/66/2/197/2670349">Elder et al. 2017</a> demonstrating Infomaps for global amphibians and mammals.</li>
+</ul>
+<h1 id="why-bother">Why bother?</h1>
+<p>Most of the reason people seem to be doing this now is for the uses of the bioregions that you get out, rather than for the actual bioregions themselves. But other people are also raising some issues with the methods used and also the general approach.</p>
+<h2 id="some-uses">Some uses</h2>
+<ul>
+<li>Modelling the drivers of their own formation
+<ul>
+<li><a href="https://www.nature.com/articles/s41559-017-0089">Ficetola 2017</a>, used an already published set of regions and modelled probability of a cell belonging to each region to test the influence of climate and geography on their delimitation.</li>
+</ul>
+</li>
+<li>Conservation
+<ul>
+<li><a href="https://academic.oup.com/bioscience/article/51/11/933/227116">Olsen 2001</a>, ecoregions gap analysis of how much of each ecoregion/biome is covered by protected areas.</li>
+<li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/ele.13321">Bernardo-Madrid 2019</a>, how biogeographical regions change with extinction and invasion. Homogenisation.</li>
+</ul>
+</li>
+<li>Evaluating niche conservatism
+<ul>
+<li><a href="https://www.nature.com/articles/nature07764">Crisp 2009</a>, assigned species to different biomes and evaluated whether evolutionary divergences were associated with transitions between biomes.</li>
+</ul>
+</li>
+<li>Ancestral state reconstruction</li>
+<li>Affect of climate change on different regions</li>
+</ul>
+<h2 id="some-problemsquestions">Some problems/questions</h2>
+<ul>
+<li>Are they natural?</li>
+<li>Is corresponding with opinion-based regions a good thing?</li>
+<li>What taxonomic level should they be done at? Wallace said genus-level.</li>
+<li>How do we incorporate phylogeny? Should we even incorporate phylogeny?</li>
+<li>Is data quality/coverage important? How important is it?</li>
+<li>Could species distribution modelling help?</li>
+</ul>
+
+    </body>
+    </html>
