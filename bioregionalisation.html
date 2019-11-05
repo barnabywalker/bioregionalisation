@@ -80,7 +80,7 @@
 <p>The distances between sites can then be put into a clustering algorithm such as:</p>
 <ul>
 <li>
-<p>K-means - minimises the within cluster distances by:</p>
+<p><strong>K-means</strong> - minimises the within cluster distances by:</p>
 <ol>
 <li>Pick random data points as the starting centroids for <em>K</em> clusters.</li>
 <li>Calculate the distance of all points to each centroid, and assign points to closest one.</li>
@@ -91,7 +91,7 @@
 which the beta-diversity metrics aren't. Also probably need to ordinate sites first so the centroids can be assigned. Also need to choose the best number of clusters (either arbitrarily or with some quantitative metric).</p>
 </li>
 <li>
-<p>Hierarchical clustering - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:</p>
+<p><strong>Hierarchical clustering</strong> - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:</p>
 <ol>
 <li>Starts by linking the two sites with the smallest distance. The branch length to the node linking them is half the distance between them.</li>
 <li>Updates the distance matrix by calculating the average distance of the sites in the first cluster to all other sites.</li>
@@ -103,24 +103,24 @@ which the beta-diversity metrics aren't. Also probably need to ordinate sites fi
 <p>This is much more commonly used. It has the advantage of working with whatever distance metric you use. Also has a hierarchical structure, which is something that bioregions are apparently meant to have. But you still need to decide how many clusters you want.</p>
 </li>
 <li>
-<p>Affinity propogation - sends messages between points to determine attractiveness between points, and the responsibility of each point to act as an examplar for a cluster. Could put in an explanation for the algorithm but its not particularly interesting. <a href="https://towardsdatascience.com/unsupervised-machine-learning-affinity-propagation-algorithm-explained-d1fef85f22c8">This is a good step through it though</a>.</p>
+<p><strong>Affinity propogation</strong> - sends messages between points to determine attractiveness between points, and the responsibility of each point to act as an examplar for a cluster. Could put in an explanation for the algorithm but its not particularly interesting. <a href="https://towardsdatascience.com/unsupervised-machine-learning-affinity-propagation-algorithm-explained-d1fef85f22c8">This is a good step through it though</a>.</p>
 <p>Not used as much as hierarchical clustering, but has the advantage of determining the optimal number of clusters for you.</p>
 </li>
 </ul>
 <p>There are various other clustering algorithms that could be used, but aren't really. UPGMA tends to be used the most, and has the advantage of being hierarchical. <a href="https://scikit-learn.org/stable/modules/clustering.html">This is a good comparison of different distance based clustering algorithms and when to use them</a></p>
-<p>Advantages of distance-based regionalisation:</p>
+<p><strong>Advantages:</strong></p>
 <ul>
 <li>Based on well known and widely used metrics</li>
 <li>Can be extended fairly easily to take phylogenetics into account</li>
 <li>Wide variety of easy to implement and use clustering algorithms, with well understood upsides and downsides</li>
 </ul>
-<p>Disadvantages:</p>
+<p><strong>Disadvantages:</strong></p>
 <ul>
 <li>beta-diversity naturally increases with geographical distance from a point, so hard to decouple geographical distance and differences in species assemblages.</li>
 <li>Can fluctuate significantly at small scales and so overestimate differences, due to competitive exclusion, spatial clustering, and environmental gradients.</li>
 <li>Heavily influenced by sampling of taxa.</li>
 </ul>
-<p>Papers:</p>
+<p><strong>Papers:</strong></p>
 <ul>
 <li><a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2699.2010.02375.x">Kreft and Jetz 2010</a> provide their view of a systematic workflow for bioregionalisation. They use Simpson distance and UPGMA clustering, but they have a nice review of other peoples attempts listing what type of metric and clustering they used. This is a really informative overview paper.</li>
 <li><a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1365-2699.2006.01664.x">Heikinheimo, Fortelius, and Mannila 2007</a>, listed in the Kreft and Jetz paper, use k-means! But it looks like they do it directly on the species presence/absence matrix, which I can't say I recommend - too many dimensions and yes/no data aren't that great for k-means, it would be better to do NMDS ordination using a beta-diversity metric and then transform that so the distances are Euclidean and then do the k-means. But it appears to have worked for them.</li>
@@ -133,19 +133,19 @@ which the beta-diversity metrics aren't. Also probably need to ordinate sites fi
 <p>But for clustering the main method that has been used is the Infomaps method that uses <a href="https://www.mapequation.org/assets/publications/EurPhysJ2010Rosvall.pdf">the map equation</a>.</p>
 <p>The map equation is a measure of how optimally a network is encoded. By grouping the nodes in a network into modules (clusters), you can decrease the detail needed to encode the nodes within each module. However, as you increase the number of modules you need a more complex code to describe moving between the modules. So it is a balance between the within-module and between-module complexity.</p>
 <p>The Infomap algorithm is a fast way of sampling how much time you would spend in each area of a network if you were taking a random walk through it. Areas where you'd spend a lot of time are areas where the sites have lots of shared species (lots of links). These are grouped in modules (clusters), as a way of minimising the map equation.</p>
-<p>Advantages:</p>
+<p><strong>Advantages:</strong></p>
 <ul>
 <li>Not coupled to geographical distance so much?</li>
 <li>Gives more weight to species that only occur at one or a few sites</li>
 <li>Aligns closely with opinion-based bioregions</li>
 <li><a href="https://bioregions.mapequation.org/">Nice web app</a></li>
 </ul>
-<p>Disadvantages:</p>
+<p><strong>Disadvantages:</strong></p>
 <ul>
 <li>No obvious way to incorporate phylogenetics</li>
 <li>I think this is still influenced by sampling of taxa? Although maybe not as heavily as distance based methods?</li>
 </ul>
-<p>Papers:</p>
+<p><strong>Papers:</strong></p>
 <ul>
 <li><a href="https://www.nature.com/articles/ncomms7848">Vilhena and Antonelli 2015</a> gives an overview of the Infomaps method with a discussion of its advantages.</li>
 <li><a href="https://academic.oup.com/sysbio/article/66/2/197/2670349">Elder et al. 2017</a> more in-depth demonstration Infomaps, for global amphibians and mammals.</li>

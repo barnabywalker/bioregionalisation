@@ -63,7 +63,7 @@ These all use some measure of distance between sites to cluster them. For bioreg
 
 The distances between sites can then be put into a clustering algorithm such as:
 
-* K-means - minimises the within cluster distances by:
+* **K-means** - minimises the within cluster distances by:
 
     1. Pick random data points as the starting centroids for *K* clusters.
     2. Calculate the distance of all points to each centroid, and assign points to closest one.
@@ -73,7 +73,7 @@ The distances between sites can then be put into a clustering algorithm such as:
     Not usually used (not sure I found an example of it) because it needs distances to be Euclidean, 
     which the beta-diversity metrics aren't. Also probably need to ordinate sites first so the centroids can be assigned. Also need to choose the best number of clusters (either arbitrarily or with some quantitative metric).
 
-* Hierarchical clustering - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:
+* **Hierarchical clustering** - usually some sort of agglomerative clustering like UPGMA which constructs a tree linking all sites by:
 
     1. Starts by linking the two sites with the smallest distance. The branch length to the node linking them is half the distance between them.
     2. Updates the distance matrix by calculating the average distance of the sites in the first cluster to all other sites.
@@ -85,25 +85,25 @@ The distances between sites can then be put into a clustering algorithm such as:
 
     This is much more commonly used. It has the advantage of working with whatever distance metric you use. Also has a hierarchical structure, which is something that bioregions are apparently meant to have. But you still need to decide how many clusters you want.
 
-* Affinity propogation - sends messages between points to determine attractiveness between points, and the responsibility of each point to act as an examplar for a cluster. Could put in an explanation for the algorithm but its not particularly interesting. [This is a good step through it though](https://towardsdatascience.com/unsupervised-machine-learning-affinity-propagation-algorithm-explained-d1fef85f22c8). 
+* **Affinity propogation** - sends messages between points to determine attractiveness between points, and the responsibility of each point to act as an examplar for a cluster. Could put in an explanation for the algorithm but its not particularly interesting. [This is a good step through it though](https://towardsdatascience.com/unsupervised-machine-learning-affinity-propagation-algorithm-explained-d1fef85f22c8). 
 
-    Not used as much as hierarchical clustering, but has the advantage of determining the optimal number of clusters for you.
+  Not used as much as hierarchical clustering, but has the advantage of determining the optimal number of clusters for you.
 
 There are various other clustering algorithms that could be used, but aren't really. UPGMA tends to be used the most, and has the advantage of being hierarchical. [This is a good comparison of different distance based clustering algorithms and when to use them](https://scikit-learn.org/stable/modules/clustering.html)
 
-Advantages of distance-based regionalisation:
+**Advantages:**
 
   * Based on well known and widely used metrics
   * Can be extended fairly easily to take phylogenetics into account
   * Wide variety of easy to implement and use clustering algorithms, with well understood upsides and downsides
 
-Disadvantages:
+**Disadvantages:**
 
   * beta-diversity naturally increases with geographical distance from a point, so hard to decouple geographical distance and differences in species assemblages.
   * Can fluctuate significantly at small scales and so overestimate differences, due to competitive exclusion, spatial clustering, and environmental gradients.
   * Heavily influenced by sampling of taxa.
 
-Papers:
+**Papers:**
 
   * [Kreft and Jetz 2010](https://onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2699.2010.02375.x) provide their view of a systematic workflow for bioregionalisation. They use Simpson distance and UPGMA clustering, but they have a nice review of other peoples attempts listing what type of metric and clustering they used. This is a really informative overview paper.
   * [Heikinheimo, Fortelius, and Mannila 2007](https://onlinelibrary.wiley.com/doi/10.1111/j.1365-2699.2006.01664.x), listed in the Kreft and Jetz paper, use k-means! But it looks like they do it directly on the species presence/absence matrix, which I can't say I recommend - too many dimensions and yes/no data aren't that great for k-means, it would be better to do NMDS ordination using a beta-diversity metric and then transform that so the distances are Euclidean and then do the k-means. But it appears to have worked for them.
@@ -122,19 +122,19 @@ The map equation is a measure of how optimally a network is encoded. By grouping
 
 The Infomap algorithm is a fast way of sampling how much time you would spend in each area of a network if you were taking a random walk through it. Areas where you'd spend a lot of time are areas where the sites have lots of shared species (lots of links). These are grouped in modules (clusters), as a way of minimising the map equation.
 
-Advantages:
+**Advantages:**
 
   * Not coupled to geographical distance so much?
   * Gives more weight to species that only occur at one or a few sites
   * Aligns closely with opinion-based bioregions
   * [Nice web app](https://bioregions.mapequation.org/)
 
-Disadvantages:
+**Disadvantages:**
 
   * No obvious way to incorporate phylogenetics
   * I think this is still influenced by sampling of taxa? Although maybe not as heavily as distance based methods?
 
-Papers:
+**Papers:**
 
   * [Vilhena and Antonelli 2015](https://www.nature.com/articles/ncomms7848) gives an overview of the Infomaps method with a discussion of its advantages.
   * [Elder et al. 2017](https://academic.oup.com/sysbio/article/66/2/197/2670349) more in-depth demonstration Infomaps, for global amphibians and mammals.
