@@ -114,17 +114,17 @@ There are various other clustering algorithms that could be used, but aren't rea
 
 Network-based clustering first puts the species and sites into a bipartite graph. The species and sites form two sets of nodes with no direct edges between nodes of the same site - no site-to-site edges and no species-to-species edges. So sites nodes are linked through the species that they share.
 
-This has some nice properties, for instance if you take the square of the network's adjacency matrix you get the species co-occurrence matrix and a matrix with number number of shared species between sites.
+This has some nice properties, for instance if you take the square of the network's adjacency matrix you get the species co-occurrence matrix and a matrix with the number of shared species between sites.
 
-But for clustering the main method that has been used is the Infomaps method that uses [the map equation](https://www.mapequation.org/assets/publications/EurPhysJ2010Rosvall.pdf).
+But for clustering the main method that has been used is the Infomap method that uses [the map equation](https://www.mapequation.org/assets/publications/EurPhysJ2010Rosvall.pdf).
 
-The map equation is a measure of how optimally a network is encoded. By grouping the nodes in a network into modules (clusters), you can decrease the detail needed to encode the nodes within each module. However, as you increase the number of modules you need a more complex code to describe moving between the modules. So it is a balance between the within-module and between-module complexity.
+The map equation is a measure of the amount of information needed to encode flow on a network given a partition of the network into modules (clusters). Flow is modelled by a random walker that moves between linked nodes, and the map equation is a sum that balances the complexity of the model (the information needed to encode movements _between_ modules) with the complexity of the data given the model (the information needed to encode movements _within_ modules).
 
-The Infomap algorithm is a fast way of sampling how much time you would spend in each area of a network if you were taking a random walk through it. Areas where you'd spend a lot of time are areas where the sites have lots of shared species (lots of links). These are grouped in modules (clusters), as a way of minimising the map equation.
+Infomap is an algorithm that searches for the modules that minimises the map equation. These modules capture areas where the random walker tend to spend a relatively long time before leaving. In this case, it means areas with lots of shared species.
 
 **Advantages:**
 
-  * Not coupled to geographical distance so much?
+  * Not coupled to geographical distance
   * Gives more weight to species that only occur at one or a few sites
   * Aligns closely with opinion-based bioregions
   * [Nice web app](https://bioregions.mapequation.org/)
@@ -136,11 +136,11 @@ The Infomap algorithm is a fast way of sampling how much time you would spend in
 
 **Papers:**
 
-  * [Vilhena and Antonelli 2015](https://www.nature.com/articles/ncomms7848) gives an overview of the Infomaps method with a discussion of its advantages.
-  * [Elder et al. 2017](https://academic.oup.com/sysbio/article/66/2/197/2670349) more in-depth demonstration Infomaps, for global amphibians and mammals.
+  * [Vilhena and Antonelli 2015](https://www.nature.com/articles/ncomms7848) gives an overview of the Infomap method with a discussion of its advantages.
+  * [Edler et al. 2017](https://academic.oup.com/sysbio/article/66/2/197/2670349) more in-depth demonstration of Infomap, for global amphibians and mammals.
   * [Colli-Silva et al. 2019](https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.13585) justifying the delimitation of campo rupestre in Eastern Brazil into two sections.
   * [Droissart et al. 2018](https://onlinelibrary.wiley.com/doi/full/10.1111/jbi.13190) regionalisation of tropical Africa using RAINBIO data.
-  * [Leroy et al. 2019](https://doi.org/10.1111/jbi.13674) use Infomaps to get global biogeographic regions for freshwater fish.
+  * [Leroy et al. 2019](https://doi.org/10.1111/jbi.13674) use Infomap to get global biogeographic regions for freshwater fish.
   
 
 # Why bother?
@@ -159,7 +159,7 @@ Most of the reason people seem to be doing this now is for the uses of the biore
 * Evaluating niche conservatism
   * [Crisp 2009](https://www.nature.com/articles/nature07764), assigned species to different biomes and evaluated whether evolutionary divergences were associated with transitions between biomes.
 * Ancestral state reconstruction
-  * [McDonald-Spicer et al. 2018](https://doi.org/10.1111/jbi.13496) use distance-based clustering and network-based clustering, but used modularity to cluster their network rather than Infomaps. Use their bioregions to infer the ancestral area of Asteraceae.
+  * [McDonald-Spicer et al. 2018](https://doi.org/10.1111/jbi.13496) use distance-based clustering and network-based clustering, but used modularity to cluster their network rather than Infomap. Use their bioregions to infer the ancestral area of Asteraceae.
 * Affect of climate change on different regions
 
 ## Some problems/questions
