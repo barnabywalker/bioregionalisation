@@ -131,8 +131,8 @@ Infomap is an algorithm that searches for the modules that minimises the map equ
 
 **Disadvantages:**
 
-  * No obvious way to incorporate phylogenetics
-  * I think this is still influenced by sampling of taxa? Although maybe not as heavily as distance based methods?
+  * No obvious way to incorporate phylogenetics (on the roadmap for the next major version though)
+  * Influenced by sampling of taxa. Although maybe not as heavily as distance based methods?
 
 **Papers:**
 
