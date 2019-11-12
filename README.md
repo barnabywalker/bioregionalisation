@@ -125,7 +125,7 @@ Infomap is an algorithm that searches for the modules that minimises the map equ
 **Advantages:**
 
   * Not coupled to geographical distance
-  * Gives more weight to species that only occur at one or a few sites
+  * Uses whole taxon assemblages rather than a summary of the differences, so contribution of rarer species not lost as much
   * Aligns closely with opinion-based bioregions
   * [Nice web app](https://bioregions.mapequation.org/)
 
